@@ -33,10 +33,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5>Avatar actual</h5>
-                    <img th:if="${usuario.avatarFilename != null}"
-                         th:src="@{'/uploads/' + ${usuario.avatarFilename}}"
+                    <img th:if="${usuario.nombreImagen != null}"
+                         th:src="@{'/uploads/' + ${usuario.nombreImagen}}"
                          class="img-fluid rounded-circle mb-3" style="max-width:200px;">
-                    <div th:if="${usuario.avatarFilename == null}">
+                    <div th:if="${usuario.nombreImagen == null}">
                         <span class="text-muted">Sin avatar</span>
                     </div>
                     <p class="mb-0"><strong th:text="${usuario.username}">username</strong></p>
