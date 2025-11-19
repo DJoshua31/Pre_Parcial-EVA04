@@ -46,7 +46,7 @@ public class ProfileController {
     public String actualizarPerfil(@RequestParam("email") String email,
                                     @RequestParam("fechaNacimiento") String fechaNacimiento,
                                     @RequestParam("password") String password,
-                                    @RequestParam("imagen") MultipartFile imagenFile,
+                                    @RequestParam(value="imagen",required=false) MultipartFile imagen,
                                     Principal principal) throws IOException {
         User usuario = userRepository.findByUsername(principal.getName()).orElse(null);
         if (usuario == null) {
@@ -60,15 +60,15 @@ public class ProfileController {
         }
         
         // En caso que el usuario escriba una nueva contraseña
-        if (password != null && !imagenFile.isEmpty()) {
+        if (password != null && !imagen.isEmpty()) {
             Path uploadPath = Paths.get(uploadDir);
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
             
-            String filename=principal.getName()+"_"+imagenFile.getOriginalFilename();
+            String filename=principal.getName()+"_"+imagen.getOriginalFilename();
             Path filePath = uploadPath.resolve(filename);
-            Files.copy(imagenFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(imagen.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             
             usuario.setNombreImagen(filename);
         }
